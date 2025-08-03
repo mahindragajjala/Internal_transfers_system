@@ -133,7 +133,9 @@ cd internal-transfers
 ### 2. **Build and Start Containers**
 
 ```bash
-docker-compose up --build
+docker compose down(if before started!)
+docker compose up --build
+
 ```
 
 * This will:
@@ -277,3 +279,62 @@ docker-compose logs app
 ```
 
 ---
+OUTPUT:
+## Build Summary
+
+- **Base image**: `golang:1.22`  
+- **Total steps**: 6  
+- **Status**: FINISHED  
+
+```
+[+] Building 38.5s (12/12) FINISHED
+ => [app internal] load build definition from Dockerfile
+ => [app internal] load metadata for docker.io/library/golang:1.22
+ => [app internal] load .dockerignore
+ => [app 1/6] FROM docker.io/library/golang:1.22
+ => [app internal] load build context
+ => [app 2/6] WORKDIR /app
+ => [app 3/6] COPY go.mod go.sum ./
+ => [app 4/6] RUN go mod download
+ => [app 5/6] COPY . .
+ => [app 6/6] RUN go build -o main ./cmd/main.go
+ => [app] exporting to image
+ => naming to docker.io/library/internal_transfers-app
+```
+
+---
+
+## Containers & Network
+
+- **App**: `internal_transfers_app`  
+- **Database**: `internal_transfers_db`  
+- **Network**: `internal_transfers_default`
+
+---
+
+## Database Logs
+
+```
+PostgreSQL Database directory appears to contain a database; Skipping initialization
+
+2025-08-03 02:13:13 UTC LOG:  starting PostgreSQL 17.5 on x86_64-pc-linux-gnu
+2025-08-03 02:13:13 UTC LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2025-08-03 02:13:13 UTC LOG:  listening on IPv6 address "::", port 5432
+2025-08-03 02:13:13 UTC LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2025-08-03 02:13:13 UTC LOG:  database system is ready to accept connections
+```
+
+---
+
+## Application Logs
+
+```
+Database connected successfully!
+
+[GIN-debug] Running in "debug" mode.
+POST   /accounts                 --> handlers.(*AccountHandler).CreateAccount-fm
+GET    /accounts/:account_id     --> handlers.(*AccountHandler).GetAccount-fm
+POST   /transactions             --> handlers.(*TransactionHandler).CreateTransaction-fm
+
+[GIN-debug] Listening and serving HTTP on :8080
+```
