@@ -1,3 +1,5 @@
+<img width="938" height="383" alt="image" src="https://github.com/user-attachments/assets/f0e07c11-7e7a-4969-801c-c8b0d9b91287" />
+
 # **Internal Transfers Application**
 
 A Golang application that facilitates **internal financial transactions between accounts**, with **PostgreSQL** as the database and **Docker Compose** for seamless deployment across operating systems.
